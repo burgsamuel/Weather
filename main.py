@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from WeatherSql import WeatherStore
+from jockeysClass import Jockey
 from dataclean import cleanData
 import threading
-import shelve
 import sqlite3
 import time
 
@@ -15,11 +15,15 @@ import time
 
 # Database file name
 db_filename = 'weatherDB.db'
+   
 
-with shelve.open("horses") as shelf:
-    shelf['data'] = []
-
-
+jockey = Jockey()
+# Set up jockey function for worker thread to call
+def updateJockeys():
+    jockey.top_50_trainers()
+    jockey.top_50_jockeys()
+    print("Horse data collected")
+    time.sleep(43200)             # 12 hour Intervals
  
 weather = WeatherStore()
 weather.create_db()
@@ -41,6 +45,7 @@ def callApi():
 
 thread_one = threading.Thread(target=callApi, daemon=True).start() # calling api and updating every 10 min
 thread_two = threading.Thread(target=cleanData, daemon=True).start() # running the dabtabase delete function
+#thread_thr = threading.Thread(target=updateJockeys, daemon=True).start() # run and update jockey data
 
 
 ##############################################
@@ -73,14 +78,14 @@ async def pressureChartData():
 
 @app.get('/recieve_horse/{data}')
 async def horse_data(data):
-    with shelve.open('horses') as shelf:
-        shelf['data'] = data
+    with open('data.txt', 'w') as file:
+        file.write(data)
     return {'msg': data}
 
 @app.get("/horsedata")
 async def horsedata():
-    with shelve.open('horses') as shelf:
-        data = shelf['data']
+    with open('data.txt', 'r') as file:
+        data = file.read()
     return data
 
 
