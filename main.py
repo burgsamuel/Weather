@@ -67,10 +67,10 @@ async def pressureChartData():
     data = pressureChart(350)
     return data
 
-@app.post('/recieve_horse')
-async def horse_data(item: Item):
+@app.get('/recieve_horse/{data}')
+async def horse_data(data):
     horse_json = data
-    return {'msg': horse_json}
+    return {'data': horse_json}
 
 @app.get("/horsedata")
 async def horsedata():
