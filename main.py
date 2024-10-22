@@ -14,7 +14,7 @@ import time
 
 # Database file name
 db_filename = 'weatherDB.db'
-horse_json = ''
+horse_json = []
 
  
 weather = WeatherStore()
@@ -69,7 +69,8 @@ async def pressureChartData():
 
 @app.get('/recieve_horse/{data}')
 async def horse_data(data):
-    horse_json = data
+    horse_json = []
+    horse_json.append(data)
     return {'data': horse_json}
 
 @app.get("/horsedata")
