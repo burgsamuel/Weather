@@ -1,0 +1,51 @@
+
+updates 16-10-24
+
+1. fixed up dataclean.py so that every hour an sql queire is ran to check for data that
+    is over 60 days old and deletes that data
+
+    Added another thread in main.py. to run cleanData() import from dataclean
+
+2. Both the graphs where heavily changed to allow them to update every 10mins automatically
+    there seems to be a glitch in the line testing though this is mixing old and new data.
+    files affected, index.html, and index.js
+
+3. set the threads running in main.py to Daemon threads the reloading of the server was hanging 
+    due to the threads not stopping.
+
+4. old graph code was copied below if a backup was needed.
+
+5. changed general.css to allow body info divs to fit 2 rows on phone screen.
+
+//     new Chart(ctx, {
+//     type: 'line',
+//     data: {
+//         labels: data.toReversed().map(row => row[0]),
+//         datasets: [{
+//         label: 'Temperature',
+//         data: data.toReversed().map(row => row[1]),
+//         borderWidth: 2,
+//         color: 'white',
+//         borderColor: 'lightblue',
+//         backgroundColor: 'rgba(0,0,0,0)',
+//         pointRadius: 0,
+//         lineTension: .4
+//         }]
+//     },
+//     options: {
+//         scales: {
+//             x: {
+//                 display:false, //Removes grid Lines
+//                 ticks: {
+//                     display: false // removes a labels
+//                 }
+//             },
+//         y: {
+//             // beginAtZero: true,
+//             // display: false,
+//         }
+//         }
+//     }
+//     });
+// }
+//

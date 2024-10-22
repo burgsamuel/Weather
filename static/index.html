@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/general.css">
+    <title>Web App</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+</head>
+<body>
+    <div id="top-div">
+        <div class="top-info-divs">last update: <span id="time-span">Time</span></div>
+        <div class="top-info-divs"><span id="date-span">Date</span></div>
+        <div class="top-info-divs"><span id="location-span">Location</span></div>
+        <div class="top-info-divs">Id: <span id="station-id-span">Station ID</span></div>      
+    </div>
+
+    <div id="body-div">
+        <div class="body-info-divs"><p>Temp 🌡️</p><span id="tempSpan"></span>°C</div>
+        <div class="body-info-divs"><p>Humidity </p><span id="humiditySpan"></span>%</div>
+        <div class="body-info-divs"><p>Pressure </p><span id="pressureSpan"></span> hPa</div>
+        <div class="body-info-divs"><p>Total 🌧️</p><span id="raintotalSpan"></span> mm</div>
+        <div class="body-info-divs"><p>Wind 🍃</p><span id="windspeedSpan"></span> kph</div>
+        <div class="body-info-divs"><p>Wind ↗️</p><span id="winddirSpan"></span> °</div>
+    </div>
+
+    <div class="chart-div">
+        <canvas id="myChart"></canvas>
+    </div>
+    <div class="chart-div">
+        <canvas id="myChart1"></canvas>
+    </div>
+
+    <script src="/static/index.js"></script>
+
+
+</body>
+</html>

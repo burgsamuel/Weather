@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jockeys</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <style>
+        body{ font-family: Arial, Helvetica, sans-serif; margin: 0px; background: linear-gradient(to right, #132b39,#2d91ad); color: #cdd9e3; justify-content: center;}
+        
+        .title-div {  font-weight: 600; text-align: center; max-width: 450px; min-width: 325px; margin-left: auto; margin-right: auto; margin-bottom: 10px; margin-top: 10px; background-color: #276077; padding: 10px 5px; border-radius: 10px; box-shadow: 5px 5px 5px rgba(0,0,0,.7);}
+        
+        #heading-title { margin:0px;}
+
+        #main-data-div { display: flex;flex-wrap: wrap; justify-content: center; align-items: center;}
+
+        #time-updated { margin: 0px; padding-top: 15px;}
+
+        .inner-div {display: flex; align-items: center; flex-wrap: nowrap; background-color: #4a46ff; margin: 5px; padding-left: 5px; padding-right: 5px; border-radius: 4px; min-width: 370px; max-width: 380px; box-shadow: 5px 5px 5px rgba(0,0,0,.7);}
+    
+        .race-name-class { padding: 0px; margin: 0px; text-align: left; min-width: 50px; max-width: 65px; margin-left: 4px; padding-right: 3px;}
+
+        #name-trainer-div { display:flex; justify-content:start; align-items: center; margin: 0px;}
+
+        .jockey-name-class { display: inline; margin: 0px; min-width: 100px; text-align: left;  min-width: 125px; padding-left: 5px;}
+
+        .bib-image-class { margin: 0px; height: 30px; width: 25px;}
+
+        .trainer-name-class {flex-grow: 3; min-width: 100px; text-align: left; margin: 0px; min-width: 125px; max-width: 130px; padding-top: 4px; padding-bottom: 4px;}
+
+        .score-class{ text-align: right; padding-left: 5px; margin-right: 4px;}
+
+    </style>
+
+</head>
+<body>
+<header>
+    <div class="title-div">
+        <p id="heading-title">
+            Jockey and Trainer Score Card
+        </p>
+        <p id="time-updated">Stats last Updated: <span id="time-update-span"></span></p>
+
+    </div>
+</header>
+
+<div id="main-data-div"></div>
+    
+
+
+<script>
+    const parentelement = document.getElementById('main-data-div');
+parentelement.innerHTML = "";
+
+collectdata()
+
+
+async function collectdata() {
+    let horseDataSplit = [];
+    response = await fetch('/horsedata')
+    data = await response.json()
+    data.forEach(element => {
+        horseDataSplit.push(element[0].split(','));
+
+    });
+
+    // convert ranking score into an INT
+    horseDataSplit.forEach(element => {
+        element[6] = parseInt(element[6].trim());
+    });
+
+
+    updateHeaderTime(horseDataSplit);
+    createMainDivs(horseDataSplit);
+    
+}
+
+
+function updateHeaderTime(data) {
+    // Data is sent from server includes the time the the stats where updated.
+    const timeElement = document.getElementById('time-update-span');
+    timeElement.innerText = '';
+
+    const timeIn = parseInt(data[0][7]);
+    const timeSet = new Date(timeIn * 1000);
+    timeElement.innerText = `${timeSet.toLocaleString()}`;
+}
+
+function createMainDivs(data) {
+
+
+    // Loop over data that has been split, and extract each piece to add to div
+    for (let i = 0; i< data.length; i++) {
+        
+
+       // Create seperate divs for each element
+        const InnerDivElement = document.createElement('div');
+        InnerDivElement.className = 'inner-div';
+        parentelement.appendChild(InnerDivElement); 
+
+        // Race Location and Number
+        const raceElement = document.createElement('p');
+        raceElement.className = 'race-name-class';
+        raceElement.innerText = data[i][0];
+        InnerDivElement.appendChild(raceElement);
+
+        const nameDivElement = document.createElement('div');
+        nameDivElement.id = 'name-trainer-div'
+        InnerDivElement.appendChild(nameDivElement)
+
+        // Jockey Colours as an image
+        const jockeyBibImage = document.createElement('img');
+        jockeyBibImage.className = 'bib-image-class';
+        jockeyBibImage.src = data[i][5];
+        jockeyBibImage.alt = "Bib Image";
+        nameDivElement.appendChild(jockeyBibImage);  
+
+        // Jockey Name 
+        const jockeyName = document.createElement('p');
+        jockeyName.className = 'jockey-name-class';
+        jockeyName.innerText = data[i][1].split('-')[1]; // Extra split to remove jockeys rank 
+        nameDivElement.appendChild(jockeyName);
+
+
+        // Trainer name
+        const trainerName = document.createElement('p');
+        trainerName.className = 'trainer-name-class';
+        trainerName.innerText = data[i][4].split('-')[1]; // Extra split to remove joxkey rank
+        nameDivElement.appendChild(trainerName);
+
+        // Score Given
+        const scoreElement = document.createElement('p');
+        scoreElement.className = 'score-class'
+        scoreElement.innerText = `${data[i][6]}`;
+
+        switch (true) {
+            case data[i][6] > 50:
+            InnerDivElement.style.backgroundColor = '#132b39';
+            InnerDivElement.style.color = '#cdd9e3';
+                break;
+            
+            case data[i][6] > 25 && data[i][6] < 50:
+            InnerDivElement.style.backgroundColor = '#275063';
+            InnerDivElement.style.color = '#cdd9e3';  
+                break;
+
+            case data[i][6] > 10 && data[i][6] < 25:
+            InnerDivElement.style.backgroundColor = '#287592';
+            InnerDivElement.style.color = '#cdd9e3';  
+                break;
+
+                case data[i][6] > 0 && data[i][6] < 10:
+            InnerDivElement.style.backgroundColor = '#b6e2eb';
+            InnerDivElement.style.color = 'black';  
+                break;
+
+            default:
+                break;
+        }
+
+        InnerDivElement.appendChild(scoreElement);
+    }
+}
+
+
+</script>
+</body>
+</html>
