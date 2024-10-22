@@ -14,7 +14,7 @@ import time
 
 # Database file name
 db_filename = 'weatherDB.db'
-horse_json = []
+horse_json = ''
 
  
 weather = WeatherStore()
