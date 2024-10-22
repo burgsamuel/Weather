@@ -24,9 +24,6 @@ def updateJockeys():
     jockey.top_50_trainers()
     jockey.top_50_jockeys()
     print("Horse data collected")
-    with shelve.open('horsefile') as shelf:
-        shelf['data'] = jockey.sendlist
-        print('data shelved')
     time.sleep(43200)             # 12 hour Intervals
  
 weather = WeatherStore()
@@ -83,9 +80,7 @@ async def pressureChartData():
 
 @app.get("/horsedata")
 async def horsedata():
-    # data = jockey.sendlist
-    with shelve.open('horsefile') as shelf:
-        data = shelf['data']
+    data = jockey.sendlist
     return data
 
 
