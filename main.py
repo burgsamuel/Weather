@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from WeatherSql import WeatherStore
-from jockeysClass import Jockey
 from dataclean import cleanData
 import threading
 import shelve
@@ -20,13 +19,7 @@ db_filename = 'weatherDB.db'
 with shelve.open("horses") as shelf:
     shelf['data'] = []
 
-jockey = Jockey()
-# Set up jockey function for worker thread to call
-def updateJockeys():
-    jockey.top_50_trainers()
-    jockey.top_50_jockeys()
-    print("Horse data collected")
-    time.sleep(43200)             # 12 hour Intervals
+
  
 weather = WeatherStore()
 weather.create_db()
@@ -48,7 +41,6 @@ def callApi():
 
 thread_one = threading.Thread(target=callApi, daemon=True).start() # calling api and updating every 10 min
 thread_two = threading.Thread(target=cleanData, daemon=True).start() # running the dabtabase delete function
-#thread_thr = threading.Thread(target=updateJockeys, daemon=True).start() # run and update jockey data
 
 
 ##############################################
