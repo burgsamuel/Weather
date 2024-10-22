@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from WeatherSql import WeatherStore
 from dataclean import cleanData
+from pydantic import BaseModel
 import threading
 import sqlite3
 import time
@@ -28,7 +29,8 @@ def callApi():
         weather.saveData()
         time.sleep(600)
 
-
+class Item(BaseModel):
+    horses: list = []
 
 ##############################################
 #          Start some worker threads         #
@@ -69,8 +71,9 @@ async def pressureChartData():
     return data
 
 @app.post('/recieve_horse')
-async def horse_data(data):
-    horse_json = data
+async def horse_data(item: Item):
+    for i in item.horses:
+        horse_json.append(i)
     return horse_json
 
 @app.get("/horsedata")
