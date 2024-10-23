@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from WeatherSql import WeatherStore
 from dataclean import cleanData
+from fastapi.params import Body
 import threading
 import sqlite3
 import time
@@ -15,6 +16,8 @@ import time
 # Database file name
 db_filename = 'weatherDB.db'
    
+
+horse_list = []
  
 weather = WeatherStore()
 weather.create_db()
@@ -66,16 +69,14 @@ async def pressureChartData():
     data = pressureChart(350)
     return data
 
-@app.get('/recieve_horse/{data}')
-async def horse_data(data):
-    with open('data.txt', 'w') as file:
-        file.write(data)
-    return {'msg': data}
+@app.post('/recieve_horse')
+async def horse_data(data: list = Body (...)):
+    horse_list.append(data)
+    return { "recieved" : data }
 
 @app.get("/horsedata")
 async def horsedata():
-    with open('data.txt', 'r') as file:
-        data = file.read()
+    data = horse_list
     return data
 
 
