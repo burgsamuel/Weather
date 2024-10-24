@@ -79,7 +79,7 @@ async def horse_data(data: dict = Body (...)):
 
 @app.get("/horsedata")
 async def horsedata():
-    with open('horsedata.txt') as f:
+    with open('horse_data.txt') as f:
         data = f.read()
     return data
 
