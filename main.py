@@ -70,7 +70,7 @@ async def pressureChartData():
     return data
 
 @app.post('/recieve_horse')
-async def horse_data(data: list = Body (...)):
+async def horse_data(data: dict = Body (...)):
     horse_list.append(data)
     return { "recieved" : data }
 
