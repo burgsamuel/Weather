@@ -5,7 +5,6 @@ from dataclean import cleanData
 from fastapi.params import Body
 import threading
 import sqlite3
-import shelve
 import time
 
 
@@ -17,7 +16,9 @@ import time
 # Database file name
 db_filename = 'weatherDB.db'
    
- 
+with open("horse_data.txt", 'w') as f:
+    f.write('')
+    
 weather = WeatherStore()
 weather.create_db()
 # Set up function for worker thread to call
@@ -71,15 +72,15 @@ async def pressureChartData():
 
 @app.post('/recieve_horse')
 async def horse_data(data: dict = Body (...)):
-    with shelve.open('horsedata') as shelf:
-        shelf["data"] = data  
+    with open('horse_data.txt', 'w') as f:
+        f.write(str(data))  
     return { "recieved" : data }
 
 
 @app.get("/horsedata")
 async def horsedata():
-    with shelve.open('horsedata') as shelf:
-        data = shelf["data"]
+    with open('horsedata.txt') as f:
+        data = f.read()
     return data
 
 
@@ -125,4 +126,5 @@ def pressureChart(number):
     data = c.fetchall()
     c.close()
     return data
+
 
