@@ -80,6 +80,7 @@ async function collectdata() {
     horseDataSplit[0][7] = parseInt(horseDataSplit[0][7]);
 
     for(let i = 0; i < horseDataSplit.length; i++) {
+        horseDataSplit[i][0] = horseDataSplit[0][0].replace('data', '');
         horseDataSplit[i][0] = horseDataSplit[0][0].replace(/[^\w ]/g, '');
         horseDataSplit[i][0] = horseDataSplit[0][0].replace('xa', ' ');
     }
@@ -106,7 +107,7 @@ function createMainDivs(data) {
     // Loop over data that has been split, and extract each piece to add to div
     for (let i = 0; i< data.length; i++) {
         
-
+        
        // Create seperate divs for each element
         const InnerDivElement = document.createElement('div');
         InnerDivElement.className = 'inner-div';
