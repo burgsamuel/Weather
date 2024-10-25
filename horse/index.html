@@ -51,25 +51,38 @@
 
 <script>
     const parentelement = document.getElementById('main-data-div');
-parentelement.innerHTML = "";
+    parentelement.innerHTML = "";
 
-collectdata()
+    collectdata()
 
 
 async function collectdata() {
     let horseDataSplit = [];
     response = await fetch('/horsedata')
     data = await response.json()
-    data.forEach(element => {
-        horseDataSplit.push(element[0].split(','));
 
-    });
+    data = data.slice(1,-1).trim();
+    data = data.split(']');
+
+
+    data.forEach(element => {
+
+        let elementSplit = element.split(',')
+        if (elementSplit[0] == "") {
+            elementSplit.splice(0,1);
+        } 
+        horseDataSplit.push(elementSplit);
+    })
+
+    
 
     // convert ranking score into an INT
-    horseDataSplit.forEach(element => {
-        element[6] = parseInt(element[6].trim());
-    });
+    horseDataSplit[0][7] = parseInt(horseDataSplit[0][7]);
 
+    for(let i = 0; i < horseDataSplit.length; i++) {
+        horseDataSplit[i][0] = horseDataSplit[0][0].replace(/[^\w ]/g, '');
+        horseDataSplit[i][0] = horseDataSplit[0][0].replace('xa', ' ');
+    }
 
     updateHeaderTime(horseDataSplit);
     createMainDivs(horseDataSplit);
