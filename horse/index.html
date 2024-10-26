@@ -13,11 +13,11 @@
         
         #heading-title { margin:0px;}
 
-        #main-data-div { display: flex;flex-wrap: wrap; justify-content: center; align-items: center;}
+        #main-data-div { display: flex; flex-wrap: wrap; justify-content: center; align-items: center;}
 
         #time-updated { margin: 0px; padding-top: 15px;}
 
-        .inner-div {display: flex; align-items: center; flex-wrap: nowrap; background-color: #4a46ff; margin: 5px; padding-left: 5px; padding-right: 5px; border-radius: 4px; min-width: 370px; max-width: 380px; box-shadow: 5px 5px 5px rgba(0,0,0,.7);}
+        .inner-div {display: none; align-items: center; flex-wrap: nowrap; background-color: #4a46ff; margin: 5px; padding-left: 5px; padding-right: 5px; border-radius: 4px; min-width: 370px; max-width: 380px; box-shadow: 5px 5px 5px rgba(0,0,0,.7);}
     
         .race-name-class { padding: 0px; margin: 0px; text-align: left; min-width: 50px; max-width: 65px; margin-left: 4px; padding-right: 3px;}
 
@@ -160,25 +160,29 @@ function createMainDivs(data) {
             case data[i][6] > 50:
             InnerDivElement.style.backgroundColor = '#132b39';
             InnerDivElement.style.color = '#cdd9e3';
+            InnerDivElement.style.display = 'flex';
                 break;
             
             case data[i][6] > 25 && data[i][6] <= 50:
             InnerDivElement.style.backgroundColor = '#275063';
             InnerDivElement.style.color = '#cdd9e3';  
+            InnerDivElement.style.display = 'flex';
                 break;
 
             case data[i][6] > 10 && data[i][6] <= 25:
             InnerDivElement.style.backgroundColor = '#287592';
             InnerDivElement.style.color = '#cdd9e3';  
+            InnerDivElement.style.display = 'flex';
                 break;
 
                 case data[i][6] > 0 && data[i][6] <= 10:
             InnerDivElement.style.backgroundColor = '#b6e2eb';
             InnerDivElement.style.color = 'black';  
+            InnerDivElement.style.display = 'flex';
                 break;
 
             default:
-                InnerDivElement.style.display = 'none';
+            InnerDivElement.style.display = 'none';
         
         }
 
