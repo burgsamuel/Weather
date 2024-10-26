@@ -15,6 +15,8 @@ import time
 
 # Database file name
 db_filename = 'weatherDB.db'
+
+horse_data_list = []
    
 with open("horse_data.txt", 'w') as f:
     f.write('')
@@ -72,15 +74,13 @@ async def pressureChartData():
 
 @app.post('/recieve_horse')
 async def horse_data(data: dict = Body (...)):
-    with open('horse_data.txt', 'w') as f:
-        f.write(str(data))  
+    horse_data_list.append(data['data']) 
     return { "recieved" : data }
 
 
 @app.get("/horsedata")
 async def horsedata():
-    with open('horse_data.txt') as f:
-        data = f.read()
+    data = horse_data_list    
     return data
 
 
