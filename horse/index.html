@@ -76,14 +76,16 @@ async function collectdata() {
 
     
 
-    // convert ranking score into an INT
+    // convert epoch into an INT
     horseDataSplit[0][7] = parseInt(horseDataSplit[0][7]);
 
+
     for(let i = 0; i < horseDataSplit.length; i++) {
+
         if (horseDataSplit[i][0] !== undefined) {
-            horseDataSplit[i][0] = horseDataSplit[0][0].replace('data', '');
-            horseDataSplit[i][0] = horseDataSplit[0][0].replace(/[^\w ]/g, '');
-            horseDataSplit[i][0] = horseDataSplit[0][0].replace('xa', ' ');
+            horseDataSplit[i][0] = horseDataSplit[i][0].replace('data', '');
+            horseDataSplit[i][0] = horseDataSplit[i][0].replace(/[^\w ]/g, '');
+            horseDataSplit[i][0] = horseDataSplit[i][0].replace('xa', ' ');
         }
         else {
             horseDataSplit.splice(i, 1)
@@ -112,7 +114,7 @@ function createMainDivs(data) {
 
     // Loop over data that has been split, and extract each piece to add to div
     for (let i = 0; i< data.length; i++) {
-        
+    
         
        // Create seperate divs for each element
         const InnerDivElement = document.createElement('div');
@@ -139,7 +141,7 @@ function createMainDivs(data) {
         // Jockey Name 
         const jockeyName = document.createElement('p');
         jockeyName.className = 'jockey-name-class';
-        jockeyName.innerText = data[i][1].split('-')[1]; // Extra split to remove jockeys rank 
+        jockeyName.innerText = data[i][1].split('-')[1].trim(); // Extra split to remove jockeys rank 
         nameDivElement.appendChild(jockeyName);
 
 
@@ -176,11 +178,13 @@ function createMainDivs(data) {
                 break;
 
             default:
-                break;
+                InnerDivElement.style.display = 'none';
+        
         }
 
         InnerDivElement.appendChild(scoreElement);
     }
+
 }
 
 
