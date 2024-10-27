@@ -61,8 +61,10 @@ async function collectdata() {
     response = await fetch('/horsedata')
     data = await response.json()
 
-    data = data[0]
 
+    data = data[0].sort((a, b) => a.score - b.score)
+   
+    console.log(data);
     updateHeaderTime(data);
     createMainDivs(data);
     
@@ -74,7 +76,7 @@ function updateHeaderTime(data) {
     const timeElement = document.getElementById('time-update-span');
     timeElement.innerText = '';
 
-    const timeIn = parseInt(data[0][0].timeStored);
+    const timeIn = parseInt(data[0].timeStored);
     const timeSet = new Date(timeIn * 1000);
     timeElement.innerText = `${timeSet.toLocaleString()}`;
 }
@@ -94,7 +96,7 @@ function createMainDivs(data) {
         // Race Location and Number
         const raceElement = document.createElement('p');
         raceElement.className = 'race-name-class';
-        raceElement.innerText = data[i][0].race;
+        raceElement.innerText = data[i].race;
         InnerDivElement.appendChild(raceElement);
 
         const nameDivElement = document.createElement('div');
@@ -104,45 +106,45 @@ function createMainDivs(data) {
         // Jockey Colours as an image
         const jockeyBibImage = document.createElement('img');
         jockeyBibImage.className = 'bib-image-class';
-        jockeyBibImage.src = data[i][0].bibLink;
+        jockeyBibImage.src = data[i].bibLink;
         jockeyBibImage.alt = "Bib Image";
         nameDivElement.appendChild(jockeyBibImage);  
 
         // Jockey Name 
         const jockeyName = document.createElement('p');
         jockeyName.className = 'jockey-name-class';
-        jockeyName.innerText = data[i][0].jockeyName;
+        jockeyName.innerText = data[i].jockeyName;
         nameDivElement.appendChild(jockeyName);
 
 
         // Trainer name
         const trainerName = document.createElement('p');
         trainerName.className = 'trainer-name-class';
-        trainerName.innerText = data[i][0].trainerName
+        trainerName.innerText = data[i].trainerName
         nameDivElement.appendChild(trainerName);
 
         // Score Given
         const scoreElement = document.createElement('p');
         scoreElement.className = 'score-class'
-        scoreElement.innerText = data[i][0].score;
+        scoreElement.innerText = data[i].score;
 
         switch (true) {
-            case data[i][0].score > 50:
+            case data[i].score > 50:
             InnerDivElement.style.backgroundColor = '#132b39';
             InnerDivElement.style.color = '#cdd9e3';
                 break;
             
-            case data[i][0].score > 25 && data[i][0].score <= 50:
+            case data[i].score > 25 && data[i].score <= 50:
             InnerDivElement.style.backgroundColor = '#275063';
             InnerDivElement.style.color = '#cdd9e3';  
                 break;
 
-            case data[i][0].score > 10 && data[i][0].score <= 25:
+            case data[i].score > 10 && data[i].score <= 25:
             InnerDivElement.style.backgroundColor = '#287592';
             InnerDivElement.style.color = '#cdd9e3';  
                 break;
 
-                case data[i][0].score > 0 && data[i][0].score <= 10:
+                case data[i].score > 0 && data[i].score <= 10:
             InnerDivElement.style.backgroundColor = '#b6e2eb';
             InnerDivElement.style.color = 'black';  
                 break;
