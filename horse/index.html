@@ -45,7 +45,7 @@
 
         .race-name-class { width: 75%; text-align: left; margin: 5px;}
 
-        .race-time { margin: 5px;}
+        .race-time { margin: 5px; width: 25%;}
         
         .bib-image-class { margin-left: 35px; height: 30px; width: 25px; }
 
@@ -109,7 +109,6 @@ async function collectdata() {
     
     return data;
 }
-
 
 
 async function sortByRace () {
@@ -187,6 +186,8 @@ function createMainDivs(data) {
         raceNameDiv.appendChild(raceElement);
 
         // Time of the race
+        const currentTime = new Date();
+
         const timeOfRace = document.createElement('p');
         timeOfRace.className = 'race-time';
         const raceTime = new Date(data[i].raceTime * 1000);
@@ -203,11 +204,13 @@ function createMainDivs(data) {
             timeOfRace.innerText = raceTimex
             raceNameDiv.append(timeOfRace);
         }
-        
+
         // Div Set up for trainer info
         const nameDivElement = document.createElement('div');
         nameDivElement.id = 'name-trainer-div'
         InnerDivElement.appendChild(nameDivElement)
+
+
 
         // Trainer name
         const trainerName = document.createElement('p');
@@ -245,6 +248,9 @@ function createMainDivs(data) {
         scoreElement.innerText = `Score: ${data[i].score}`;
 
         switch (true) {
+            case currentTime > raceTime:
+                InnerDivElement.style.opacity = '.5';
+
             case data[i].score > 50:
             InnerDivElement.style.backgroundColor = '#132b39';
             InnerDivElement.style.color = '#cdd9e3';
