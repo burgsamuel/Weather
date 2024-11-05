@@ -307,8 +307,20 @@ function createMainDivs(data) {
         scoreDiv.appendChild(scoreElement);
     }
 
+
 }
 
+async function regularUpdate () {
+// used to update data every x mins
+let updatedata = await data;
+parentelement.innerText = '';
+createMainDivs(updatedata);
+}
+
+setInterval(() => {
+    regularUpdate();
+    console.log('updated');
+},300000);
 
 </script>
 </body>
