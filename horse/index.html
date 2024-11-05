@@ -15,25 +15,29 @@
 
         #sort-button-div { margin-left: auto; margin-right: auto; margin-bottom: 15px; margin-top: 15px; max-width: 380px; text-align: center;}
 
+        /* sorting buttons */
         #race-time-button { width: 90px; background-color: rgba(0,0,0,.0); color: #cdd9e3; padding-top: 5px; padding-bottom: 5px; border: 1px solid white; border-radius: 5px; box-shadow: 5px 5px 5px rgba(0,0,0,.2); cursor: pointer; margin-left: 5px; transition: all .5s;}
-
         #score-button { width: 70px; padding-top: 5px; padding-bottom: 5px; background-color: rgba(0,0,0,.0); color: #cdd9e3; border: 1px solid white; border-radius: 5px; box-shadow: 5px 5px 5px rgba(0,0,0,.2); cursor: pointer; margin-left: 5px; transition: all .5s;}
-
         #location-button { width: 90px; background-color: rgba(0,0,0,.0); color: #cdd9e3; padding-top: 5px; padding-bottom: 5px; border: 1px solid white; border-radius: 5px; box-shadow: 5px 5px 5px rgba(0,0,0,.2); cursor: pointer; margin-left: 5px; transition: all .5s;}
 
+        /* hover State for sorting buttons */
         #score-button:hover { opacity: .9; border:1px solid #132b39; transition: all .1s; scale: 1.05;}
-
         #race-time-button:hover { opacity: .9; border:1px solid #132b39; transition: all .1s; scale: 1.05;}
-
         #location-button:hover { opacity: .9; border:1px solid #132b39; transition: all .1s; scale: 1.05;}
 
+        /* Active state for sorting buttons */
         #race-time-button:active { scale: .98; transition: all .1s; box-shadow: none;}
-
         #score-button:active { scale: .98; transition: all .1s; box-shadow: none;}
-
         #location-button:active { scale: .98; transition: all .1s; box-shadow: none;}
 
+        /* Hide or Show Button */
+        #already-ran-button {width: 300px; background-color: rgba(0,0,0,.0); color: #cdd9e3; padding-top: 5px; padding-bottom: 5px; border: 1px solid white; border-radius: 5px; box-shadow: 5px 5px 5px rgba(0,0,0,.2); cursor: pointer; margin-left: 5px; transition: all .5s;}
+        #already-ran-button:hover { opacity: .9; border:1px solid #132b39; transition: all .1s; scale: 1.05;}
+        #already-ran-button:active { scale: .98; transition: all .1s; box-shadow: none;}
+
         #main-data-div { display: flex; flex-wrap: wrap; justify-content: center; align-items: center;}
+
+        #completed-run-div {display: flex; align-items: center; justify-content: center; margin: 10px;}
 
         #time-updated { margin: 0px; padding-top: 15px;}
 
@@ -80,7 +84,7 @@
         <button id="location-button" onclick="sortByTrack()" title="Orgainze by race loaction">Race Track</button>
     </div>
 </header>
-
+<div id="completed-run-div"><button id="already-ran-button" onclick="showCompletedRaces()">🐎 Show  Already  Raced</button></div>
 <div id="main-data-div"></div>
     
 
@@ -92,8 +96,25 @@
     const parentelement = document.getElementById('main-data-div');
     parentelement.innerHTML = "";
 
+    let ranDivState = false;
+
+
+async function showCompletedRaces () {
+
+    // Function for button to hide or show completed races
+    let updatedata = await data;
+
+    if (ranDivState === true) {   
+        ranDivState = false;
+    } else {
+        ranDivState = true;
+    }
+    parentelement.innerText = '';
+    createMainDivs(updatedata);
+}
+
     
-async function collectdata() {
+async function collectdata () {
 
     // calls api for the data and sorts into race time 
     let horseDataSplit = [];
@@ -199,6 +220,7 @@ function createMainDivs(data) {
         if (parseInt(raceTimex[0]) === 0) {
             timeOfRace.innerText = raceTimex.slice(1)
             raceNameDiv.append(timeOfRace);
+               
         }
         else {
             timeOfRace.innerText = raceTimex
@@ -250,7 +272,13 @@ function createMainDivs(data) {
         switch (true) {
             case currentTime > raceTime:
                 InnerDivElement.style.opacity = '.5';
-
+                if (ranDivState === false) {
+                    InnerDivElement.style.display = 'none';
+                    document.getElementById('already-ran-button').innerText = '🐎 Show  Already  Raced';
+                } else {
+                    InnerDivElement.style.display = 'flex';
+                    document.getElementById('already-ran-button').innerText = '🐎 Hide  Already  Raced';
+                }
             case data[i].score > 50:
             InnerDivElement.style.backgroundColor = '#132b39';
             InnerDivElement.style.color = '#cdd9e3';
