@@ -2,6 +2,7 @@
 
 let workingData = collectdata();
 
+const totalTips = document.getElementById('total-tips') 
 const menuDiv = document.getElementById('menu-div');
 const headingTitle = document.getElementById('heading-title');
 const parentelement = document.getElementById('main-data-div');
@@ -114,6 +115,10 @@ function createMainDivs(data) {
             }
 
         };
+
+        // Update total horses
+        // totalTips.innerText = ` ${length.data} horses`;
+
         parentelement.appendChild(InnerDivElement); 
 
         // Set header div up for race number and time
@@ -126,6 +131,13 @@ function createMainDivs(data) {
         raceElement.className = 'race-name-class';
         raceElement.innerText = data[i].race;
         raceNameDiv.appendChild(raceElement);
+
+        const raceClass = document.createElement('p');
+        raceClass.className = 'race-prize-class';
+        if (data[i].raceDetails) {
+            raceClass.innerText = data[i].raceDetails.prizeMoney;
+        }
+        raceNameDiv.appendChild(raceClass);
 
         // Time of the race
         const currentTime = new Date();
@@ -149,10 +161,18 @@ function createMainDivs(data) {
         }
 
         // div for track and weather conditions
+
         const conditionsDiv = document.createElement('div');
         conditionsDiv.className = 'conditions-div';
         conditionsDiv.style.display = 'none';
         InnerDivElement.appendChild(conditionsDiv);
+
+        const trackLength = document.createElement('p');
+        trackLength.className = 'track-length-class';
+        if (data[i].raceDetails) {
+            trackLength.innerText = data[i].raceDetails.raceLength;
+        }
+        conditionsDiv.appendChild(trackLength);
 
         const trackCondition = document.createElement('p');
         trackCondition.className = 'track-condition-p';
@@ -187,6 +207,16 @@ function createMainDivs(data) {
         horseName.innerText = `🏇 ${data[i].horse}`;
         nameDivElement.appendChild(horseName);
 
+        // Odds 
+        const horseOdds = document.createElement('p');
+        horseOdds.className = 'horse-odds-class';
+        if (data[i].raceDetails){
+            horseOdds.innerText = `${data[i].raceDetails.odds}`;
+        } else {
+            horseOdds.innerText = `$ - `;
+        }
+        nameDivElement.appendChild(horseOdds);
+
         // Trainer and Score Div
         const scoreDiv = document.createElement('div');
         scoreDiv.className = "score-div";
@@ -201,9 +231,16 @@ function createMainDivs(data) {
 
         // Jockey Name 
         const jockeyName = document.createElement('p');
+        const jockeyWeight = document.createElement('p');
         jockeyName.className = 'jockey-name-class';
+        jockeyWeight.className = 'jockey-weight-class';
         jockeyName.innerText = data[i].jockeyName;
         scoreDiv.appendChild(jockeyName);
+        if(data[i].raceDetails){
+            jockeyWeight.innerText = `${data[i].raceDetails.jockeyWeight}`;
+        }
+        scoreDiv.appendChild(jockeyWeight);
+
 
         // Score Given
         const scoreElement = document.createElement('p');
@@ -289,6 +326,8 @@ let updatedata = await data;
 parentelement.innerText = '';
 createMainDivs(updatedata);
 }
+
+
 
 setInterval(() => {
     regularUpdate();

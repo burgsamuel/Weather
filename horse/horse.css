@@ -7,6 +7,10 @@ body { display: flex; flex-direction: column; justify-content: center; font-fami
 #menu-icon:active{ scale: 0.98; transition: all.1s; box-shadow: none;}
 #heading-title   { text-shadow: 3px 3px 5px rgba(15, 3, 3, 0.233); padding-right: 25px; font-weight: 600; margin:0px; width: 100%; text-align: center; display: flex; justify-content: center; align-items: center; font-size: 20px;}
 
+#total-tips {
+    font-size: 14px;
+}
+
 .instructions-p  { margin-right: 15px; text-align: center; display: flex; justify-content: center; width: 100%; align-items: center; flex-direction: column;}
 
 .title-div       { font-weight: 700; text-align: center; max-width: 450px; margin-left: auto; margin-right: auto; margin-bottom: 10px; background-color: rgba(0,0,0,.0); padding: 10px 5px; border-radius: 10px; box-shadow: 5px 5px 5px rgba(0,0,0,.0);}
@@ -47,17 +51,31 @@ body { display: flex; flex-direction: column; justify-content: center; font-fami
 
 .race-name-class   { width: 75%; text-align: left; margin: 5px;}
 
-.race-time         { margin: 5px; width: 25%;}
+.race-time         { margin: 5px; width: 100px;}
+
+.race-prize-class { margin-top: 8px; font-size: 12px;}
 
 /*  Track conditions div  */
 .conditions-div    { display: flex; justify-content: space-evenly; width: 100%; font-size: 12px; margin-bottom: 10px;}
 .track-condition-p { margin: 0;}
 .track-weather-p   { margin: 0;}
 .track-temp-p      { margin: 0;}
+.track-length-class{ margin: 0;}
 
 .bib-image-class   { margin-left: 35px; height: 30px; width: 25px; }
 
 .jockey-name-class { display: inline; margin: 0px; text-align: left; padding-left: 5px; font-size: 16px;}
+
+.horse-odds-class{
+    font-size: 14px;
+    text-shadow: 5px 5px 5px rgba(0,0,0,.5);
+    color: aquamarine;
+    padding-right: 5px;
+}
+
+.jockey-weight-class {
+    font-size: 10px;
+}
 
 #name-trainer-div  { display: flex; justify-content: space-between; align-items: center; margin: 0px; width: 100%;}
 
@@ -67,5 +85,5 @@ body { display: flex; flex-direction: column; justify-content: center; font-fami
 
 .trainer-name-class{ text-align: left; margin: 0px; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; font-size: 14px;}
 
-.score-class       { display: block; text-align: right; margin: 0px; padding-right: 10px;}
+.score-class       { display: block; text-align: right; margin: 0px; }
 
