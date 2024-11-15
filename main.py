@@ -81,7 +81,7 @@ async def horse_data(data: dict = Body (...)):
 
 @app.get("/horsedata")
 async def horsedata():
-    data = horse_data_list    
+    data = await horse_data_list    
     return data
 
 
