@@ -1,6 +1,6 @@
 
 
-let workingData = collectdata();
+
 
 const totalTips = document.getElementById('total-tips') 
 const menuDiv = document.getElementById('menu-div');
@@ -29,7 +29,7 @@ async function showCompletedRaces () {
 async function collectdata () {
 
     // calls api for the data and sorts into race time 
-    let horseDataSplit = [];
+
     response = await fetch('/horsedata');
     data = await response.json();
 
@@ -288,6 +288,9 @@ function createMainDivs(data) {
 
 }
 
+
+
+
 let menuExpandstate = false;
 const instructions = document.createElement('p');
 instructions.className = 'instructions-p';
@@ -320,6 +323,7 @@ instructions.innerHTML += '<h3>👍 The lower the score the better 👌</h3>';
 instructions.innerHTML += '<p>As races are completed they will drop off the list. To see races already completed today click the "Show Already Raced" button.</p>';
 instructions.innerHTML += '<p>Do not forget to click on a tile to see that races current track conditions and weather.</p>';
 
+
 async function regularUpdate () {
 // used to update data every x mins
 let updatedata = await data;
@@ -328,8 +332,8 @@ createMainDivs(updatedata);
 }
 
 
-
 setInterval(() => {
     regularUpdate();
 },300000);
 
+let workingData = collectdata();
