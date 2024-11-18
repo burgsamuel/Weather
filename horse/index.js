@@ -337,3 +337,8 @@ setInterval(() => {
 },300000);
 
 let workingData = collectdata();
+while (!workingData) {
+    setInterval(() => {
+        workingData = collectdata;
+    }, 500);
+}
