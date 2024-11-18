@@ -35,7 +35,13 @@ async function collectdata () {
 
     workingData = await data;
     
-    data = data[0].sort((a, b) => a.raceTime - b.raceTime)
+    try{
+        data = data[0].sort((a, b) => a.raceTime - b.raceTime)
+    }
+    catch (e) {
+        console.log(e)
+        workingData = collectdata()
+    }
 
     updateHeaderTime(data);
     createMainDivs(data);
