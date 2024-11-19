@@ -51,7 +51,7 @@ thread_two = threading.Thread(target=cleanData, daemon=True).start() # running t
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory = "static", html = True), name = "static")
-app.mount("/horsetoday", StaticFiles(directory = "horse", html = True), name = "horse")
+app.mount("/horsetoday", StaticFiles(directory = "horseV1.1", html = True), name = "horse")
 
 
 @app.get("/weather")
