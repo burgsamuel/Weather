@@ -47,6 +47,7 @@ async function collectdata () {
     }
     catch (e) {
         console.log(e)
+        workingData = collectdata()
     }
 
     updateHeaderTime(data);
