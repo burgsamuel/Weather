@@ -287,16 +287,6 @@ function createMainDivs(data) {
             racePositionP.innerText = `Finish Position: ${data[i].finishPosition}`;
         }
 
-
-        if (parseInt(data[i].finishPosition) == 1) {
-            racePositionP.style.color = 'black';
-            InnerDivElement.style.backgroundColor = '#b5ff00';
-        } 
-        if (parseInt(data[i].finishPosition) > 1 && parseInt(data[i].finishPosition) <=3){
-            racePositionP.style.color = 'black';
-            InnerDivElement.style.backgroundColor = '#00ff73';
-        }
-
         if (currentTime < raceTime) {
             raceDiv.style.display = 'none'; // Hiding uncollected results
         }
@@ -355,6 +345,17 @@ function createMainDivs(data) {
             default:
             InnerDivElement.style.display = 'none';
         
+        }
+
+        if (parseInt(data[i].finishPosition) == 1) {
+            racePositionP.style.color = 'black';
+            InnerDivElement.style.backgroundColor = '#FFE6A9';
+            InnerDivElement.style.color = 'black';
+        } 
+        if (parseInt(data[i].finishPosition) > 1 && parseInt(data[i].finishPosition) <=3){
+            racePositionP.style.color = 'white';
+            InnerDivElement.style.backgroundColor = '#B1C29E';
+            InnerDivElement.style.color = 'black';
         }
 
         scoreDiv.appendChild(scoreElement);
