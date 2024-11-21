@@ -2,6 +2,7 @@
 
 
 
+
 const totalTips = document.getElementById('total-tips') 
 const menuDiv = document.getElementById('menu-div');
 const headingTitle = document.getElementById('heading-title');
@@ -25,6 +26,12 @@ async function showCompletedRaces () {
     createMainDivs(updatedata);
 }
 
+
+
+//////////////////////////////////////////////////////////////////////////
+//////                  Data fetching Functions                     //////
+////////////////////////////////////////////////////////////////////////// 
+
     
 async function collectdata () {
 
@@ -40,7 +47,6 @@ async function collectdata () {
     }
     catch (e) {
         console.log(e)
-        workingData = collectdata()
     }
 
     updateHeaderTime(data);
@@ -48,6 +54,12 @@ async function collectdata () {
     
     return data;
 }
+
+
+
+//////////////////////////////////////////////////////////////////////////
+//////                   Data Sorting Functions                     //////
+////////////////////////////////////////////////////////////////////////// 
 
 
 async function sortByRace () {
@@ -92,6 +104,11 @@ async function sortByTrack () {
 }
 
 
+
+//////////////////////////////////////////////////////////////////////////
+//////                  Updating time main page                     //////
+////////////////////////////////////////////////////////////////////////// 
+
 function updateHeaderTime(data) {
     // Data is sent from server includes the time the the stats where updated.
     const timeElement = document.getElementById('time-update-span');
@@ -103,6 +120,11 @@ function updateHeaderTime(data) {
 }
 
 
+
+
+//////////////////////////////////////////////////////////////////////////
+//////                  Build elements onto page                    //////
+////////////////////////////////////////////////////////////////////////// 
 
 
 function createMainDivs(data) {
@@ -248,7 +270,47 @@ function createMainDivs(data) {
         scoreDiv.appendChild(jockeyWeight);
 
 
-        // Score Given
+        
+        //////////////////////////////////////////////////////////////////////////
+        //////                  Adding Results To Page                      //////
+        ////////////////////////////////////////////////////////////////////////// 
+
+
+        const raceDiv = document.createElement('div');
+        raceDiv.className = 'race-position';
+        const racePositionP = document.createElement('p');
+        racePositionP.className = 'race-position-p'
+
+        if (data[i].finishPosition == undefined){
+            racePositionP.innerText = `-`;
+        } else {
+            racePositionP.innerText = `Finish Position: ${data[i].finishPosition}`;
+        }
+
+
+        if (parseInt(data[i].finishPosition) == 1) {
+            racePositionP.style.color = 'black';
+            InnerDivElement.style.backgroundColor = '#b5ff00';
+        } 
+        if (parseInt(data[i].finishPosition) > 1 && parseInt(data[i].finishPosition) <=3){
+            racePositionP.style.color = 'black';
+            InnerDivElement.style.backgroundColor = '#00ff73';
+        }
+
+        if (currentTime < raceTime) {
+            raceDiv.style.display = 'none'; // Hiding uncollected results
+        }
+
+        InnerDivElement.appendChild(raceDiv);
+        raceDiv.appendChild(racePositionP);
+
+
+
+        ///////////////////////////////////////////////////////////////////////////
+        //////                  Scores added and colours                    //////
+        ////////////////////////////////////////////////////////////////////////// 
+        
+
         const scoreElement = document.createElement('p');
         scoreElement.className = 'score-class'
         scoreElement.innerText = `Score: ${data[i].score}`;
@@ -256,13 +318,20 @@ function createMainDivs(data) {
         switch (true) {
             case currentTime > raceTime:
                 InnerDivElement.style.opacity = '.7';
+
                 if (ranDivState === false) {
                     InnerDivElement.style.display = 'none';
                     document.getElementById('already-ran-button').innerText = '🐎 Show  Already  Raced';
                 } else {
-                    InnerDivElement.style.display = 'flex';
+                    InnerDivElement.style.display = 'flex';  
+                    if (raceTime > currentTime) {
+                        InnerDivElement.style.display = 'none';
+                    }else {
+                        raceDiv.style.display = 'flex';
+                    }
                     document.getElementById('already-ran-button').innerText = '🐎 Hide  Already  Raced';
                 }
+
             case data[i].score > 50:
             InnerDivElement.style.backgroundColor = '#132b39';
             InnerDivElement.style.color = '#cdd9e3';
@@ -291,20 +360,6 @@ function createMainDivs(data) {
         scoreDiv.appendChild(scoreElement);
 
 
-        // Race position 
-        const raceDiv = document.createElement('div');
-        raceDiv.className = 'race-position';
-        const racePositionP = document.createElement('p');
-        racePositionP.className = 'race-position-p'
-        racePositionP.innerText = `Finish Position: ${data[i].finishPosition}`;
-        if (parseInt(data[i].finishPosition) <= 3) {
-            racePositionP.style.color = 'yellow';
-            InnerDivElement.style.backgroundColor = 'darkgreen';
-        } else {
-            racePositionP.style.color = 'grey';
-        }
-        InnerDivElement.appendChild(raceDiv);
-        raceDiv.appendChild(racePositionP);
 
     }
 
@@ -312,6 +367,11 @@ function createMainDivs(data) {
 }
 
 
+
+
+//////////////////////////////////////////////////////////////////////////
+//////                  Top Menu Instrucitons Page                  //////
+////////////////////////////////////////////////////////////////////////// 
 
 
 let menuExpandstate = false;
@@ -345,6 +405,13 @@ instructions.innerHTML += '<p>For the best chance look for the lowest <br>🏇 S
 instructions.innerHTML += '<h3>👍 The lower the score the better 👌</h3>';
 instructions.innerHTML += '<p>As races are completed they will drop off the list. To see races already completed today click the "Show Already Raced" button.</p>';
 instructions.innerHTML += '<p>Do not forget to click on a tile to see that races current track conditions and weather.</p>';
+
+
+
+
+//////////////////////////////////////////////////////////////////////////
+//////                Running Functions and updates                 //////
+////////////////////////////////////////////////////////////////////////// 
 
 
 async function regularUpdate () {
