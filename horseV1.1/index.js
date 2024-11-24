@@ -161,12 +161,12 @@ function createMainDivs(data) {
         raceElement.innerText = data[i].race;
         raceNameDiv.appendChild(raceElement);
 
-        const raceClass = document.createElement('p');
-        raceClass.className = 'race-prize-class';
+        const gateNumber = document.createElement('p');
+        gateNumber.className = 'gate-class';
         if (data[i].raceDetails) {
-            raceClass.innerText = data[i].raceDetails.prizeMoney;
+            gateNumber.innerText = data[i].raceDetails.gateNumber;
         }
-        raceNameDiv.appendChild(raceClass);
+        raceNameDiv.appendChild(gateNumber);
 
         // Time of the race
         const currentTime = new Date();
@@ -196,12 +196,12 @@ function createMainDivs(data) {
         conditionsDiv.style.display = 'none';
         InnerDivElement.appendChild(conditionsDiv);
 
-        const trackLength = document.createElement('p');
-        trackLength.className = 'track-length-class';
+        const lastFinishes = document.createElement('p');
+        lastFinishes.className = 'track-length-class';
         if (data[i].raceDetails) {
-            trackLength.innerText = data[i].raceDetails.raceLength;
+            lastFinishes.innerText = data[i].raceDetails.lastFinishes;
         }
-        conditionsDiv.appendChild(trackLength);
+        conditionsDiv.appendChild(lastFinishes);
 
         const trackCondition = document.createElement('p');
         trackCondition.className = 'track-condition-p';
@@ -240,11 +240,23 @@ function createMainDivs(data) {
         const horseOdds = document.createElement('p');
         horseOdds.className = 'horse-odds-class';
         if (data[i].raceDetails){
-            horseOdds.innerText = `${data[i].raceDetails.odds}`;
-        } else {
+            horseOdds.innerText = `$${data[i].raceDetails.winPrice}`;
+        } 
+
+        else {
             horseOdds.innerText = `$ - `;
         }
+        try {
+            if (data[i].raceDetails.Scratched) {
+                horseOdds.innerText = `${data[i].raceDetails.Scratched}`;
+                data[i].raceDetails.weight = '';
+            }
+        } catch (error) {
+            horseOdds.innerText = `$ - `;
+        }
+
         nameDivElement.appendChild(horseOdds);
+
 
         // Trainer and Score Div
         const scoreDiv = document.createElement('div');
@@ -266,8 +278,9 @@ function createMainDivs(data) {
         jockeyName.innerText = data[i].jockeyName;
         scoreDiv.appendChild(jockeyName);
         if(data[i].raceDetails){
-            jockeyWeight.innerText = `${data[i].raceDetails.jockeyWeight}`;
+            jockeyWeight.innerText = `${data[i].raceDetails.weight}`;
         }
+        
         scoreDiv.appendChild(jockeyWeight);
 
 
@@ -429,8 +442,3 @@ setInterval(() => {
 },300000);
 
 let workingData = collectdata();
-while (!workingData) {
-    setInterval(() => {
-        workingData = collectdata;
-    }, 500);
-}
