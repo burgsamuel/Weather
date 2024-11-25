@@ -240,9 +240,12 @@ function createMainDivs(data) {
         const horseOdds = document.createElement('p');
         horseOdds.className = 'horse-odds-class';
         if (data[i].raceDetails){
-            horseOdds.innerText = `$${data[i].raceDetails.winPrice}`;
+            if (data[i].raceDetails.ABN) {
+                horseOdds.innerText = `ABN`;
+            } else {
+                horseOdds.innerText = `$${data[i].raceDetails.winPrice}`;
+            }
         } 
-
         else {
             horseOdds.innerText = `$ - `;
         }
@@ -374,6 +377,15 @@ function createMainDivs(data) {
 
         scoreDiv.appendChild(scoreElement);
 
+        try {
+            if (data[i].raceDetails.ABN) {
+                InnerDivElement.style.backgroundColor = 'black';
+                InnerDivElement.style.opacity = '0.6';
+            }
+        }
+        catch (error) {
+
+        }
 
 
     }
