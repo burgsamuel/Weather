@@ -456,7 +456,7 @@ setInterval(() => {
 
 setInterval(() => {
     collectdata();
-},300000);
+},900000);
 
 
 collectdata();
