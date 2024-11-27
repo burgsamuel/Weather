@@ -453,4 +453,10 @@ setInterval(() => {
     regularUpdate();
 },300000);
 
-let workingData = collectdata();
+
+setInterval(() => {
+    collectdata();
+},300000);
+
+
+collectdata();
