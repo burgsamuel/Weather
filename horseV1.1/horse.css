@@ -11,6 +11,10 @@ body { display: flex; flex-direction: column; justify-content: center; font-fami
     font-size: 14px;
 }
 
+#total-tips-p {
+    margin-bottom: 0;
+}
+
 .instructions-p  { margin-right: 15px; text-align: center; display: flex; justify-content: center; width: 100%; align-items: center; flex-direction: column;}
 
 .title-div       { font-weight: 700; text-align: center; max-width: 450px; margin-left: auto; margin-right: auto; margin-bottom: 10px; background-color: rgba(0,0,0,.0); padding: 10px 5px; border-radius: 10px; box-shadow: 5px 5px 5px rgba(0,0,0,.0);}
@@ -68,10 +72,11 @@ body { display: flex; flex-direction: column; justify-content: center; font-fami
 
 .horse-odds-class{
     font-size: 14px;
-    text-align: center;
-    text-shadow: 5px 5px 5px rgba(0,0,0,.5);
-    color: aquamarine;
+    text-align: left;
+    text-shadow: 5px 5px 5px rgba(0,0,0,.3);
+    color: rgb(167, 176, 173);
     padding-right: 5px;
+    width: 70px;
 }
 
 .jockey-weight-class {
@@ -82,9 +87,9 @@ body { display: flex; flex-direction: column; justify-content: center; font-fami
 
 .score-div         { display: flex; align-items: center; justify-content:space-between; width: 100%; margin: 10px 0px;}
 
-.horse-name-class  { text-align: left; margin: 0px; padding-right: 10px; font-size: 14px;}
+.horse-name-class  { text-align: left; margin: 0px; padding-right: 10px; font-size: 14px; text-align: center;}
 
-.trainer-name-class{ text-align: left; margin: 0px; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; font-size: 14px;}
+.trainer-name-class{ width: 110px; text-align: left; margin: 0px; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; font-size: 14px;}
 
 .score-class       { display: block; text-align: right; margin: 0px; }
 

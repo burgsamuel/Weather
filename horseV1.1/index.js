@@ -7,6 +7,8 @@ const totalTips = document.getElementById('total-tips')
 const menuDiv = document.getElementById('menu-div');
 const headingTitle = document.getElementById('heading-title');
 const parentelement = document.getElementById('main-data-div');
+const totalTipsSpan = document.getElementById('Total-horse-span');
+const alreadyRacedSpan = document.getElementById('alreadyRaced-span');
 parentelement.innerHTML = "";
 
 let ranDivState = false;
@@ -130,6 +132,10 @@ function updateHeaderTime(data) {
 
 function createMainDivs(data) {
 
+    let alreadyRaced = 0;
+    let totalTips = data.length;
+
+
     // Loop over data that has been split, and extract each piece to add to div
     for (let i = 0; i< data.length; i++) {
     
@@ -198,6 +204,7 @@ function createMainDivs(data) {
 
         const lastFinishes = document.createElement('p');
         lastFinishes.className = 'track-length-class';
+
         if (data[i].raceDetails) {
             lastFinishes.innerText = data[i].raceDetails.lastFinishes;
         }
@@ -205,17 +212,32 @@ function createMainDivs(data) {
 
         const trackCondition = document.createElement('p');
         trackCondition.className = 'track-condition-p';
-        trackCondition.innerText = `${data[i].conditions.condition}`;
+        try {
+            trackCondition.innerText = `${data[i].conditions.condition}`;
+        }
+        catch (e) {
+            trackCondition.innerText = `-`;      
+        }
         conditionsDiv.appendChild(trackCondition);
 
         const trackWeather = document.createElement('p');
         trackWeather.className = 'track-weather-p';
-        trackWeather.innerText = data[i].conditions.weather;
+        try {
+            trackWeather.innerText = data[i].conditions.weather;
+        }
+        catch (e) {
+            trackWeather.innerText = '-';
+        }
         conditionsDiv.appendChild(trackWeather);
 
         const trackTemp = document.createElement('p');
         trackTemp.className = 'track-temp-p';
-        trackTemp.innerText = `${data[i].conditions.temp}°C`;
+        try{
+            trackTemp.innerText = `${data[i].conditions.temp}°C`;
+        }
+        catch (e) {
+            trackTemp.innerText = `-°C`;
+        }
         conditionsDiv.appendChild(trackTemp);
 
 
@@ -236,6 +258,12 @@ function createMainDivs(data) {
         horseName.innerText = `🏇 ${data[i].horse}`;
         nameDivElement.appendChild(horseName);
 
+
+        //////////////////////////////////////////////////////////////////////////
+        //////                  Adding Odds To Page                      //////
+        ////////////////////////////////////////////////////////////////////////// 
+
+
         // Odds 
         const horseOdds = document.createElement('p');
         horseOdds.className = 'horse-odds-class';
@@ -243,7 +271,8 @@ function createMainDivs(data) {
             if (data[i].raceDetails.ABN) {
                 horseOdds.innerText = `ABN`;
             } else {
-                horseOdds.innerText = `$${data[i].raceDetails.winPrice}`;
+                horseOdds.innerText = `W: $${data[i].raceDetails.winPrice} `;
+                horseOdds.innerText += `P: $${data[i].raceDetails.placePrice}`;
             }
         } 
         else {
@@ -328,7 +357,9 @@ function createMainDivs(data) {
 
                 if (ranDivState === false) {
                     InnerDivElement.style.display = 'none';
-                    document.getElementById('already-ran-button').innerText = '🐎 Show  Already  Raced';
+                    alreadyRaced += 1;
+                    document.getElementById('already-ran-button').innerText = `🐎 Show  Already  Raced`;
+                    
                 } else {
                     InnerDivElement.style.display = 'flex';  
                     if (raceTime > currentTime) {
@@ -336,7 +367,7 @@ function createMainDivs(data) {
                     }else {
                         raceDiv.style.display = 'flex';
                     }
-                    document.getElementById('already-ran-button').innerText = '🐎 Hide  Already  Raced';
+                    document.getElementById('already-ran-button').innerText = `🐎 Hide  Already  Raced`;
                 }
 
             case data[i].score > 50:
@@ -352,11 +383,13 @@ function createMainDivs(data) {
             case data[i].score > 10 && data[i].score <= 25:
             InnerDivElement.style.backgroundColor = '#287592';
             InnerDivElement.style.color = '#cdd9e3';  
+            horseOdds.style.color = 'lightgrey';
                 break;
 
                 case data[i].score > 0 && data[i].score <= 10:
             InnerDivElement.style.backgroundColor = '#b6e2eb';
             InnerDivElement.style.color = 'black';  
+            horseOdds.style.color = 'black';
                 break;
 
             default:
@@ -368,11 +401,13 @@ function createMainDivs(data) {
             racePositionP.style.color = 'black';
             InnerDivElement.style.backgroundColor = '#FFE6A9';
             InnerDivElement.style.color = 'black';
+            horseOdds.style.color = 'black';
         } 
         if (parseInt(data[i].finishPosition) > 1 && parseInt(data[i].finishPosition) <=3){
             racePositionP.style.color = 'white';
             InnerDivElement.style.backgroundColor = '#B1C29E';
             InnerDivElement.style.color = 'black';
+            horseOdds.style.color = 'black';
         }
 
         scoreDiv.appendChild(scoreElement);
@@ -386,7 +421,8 @@ function createMainDivs(data) {
         catch (error) {
 
         }
-
+        alreadyRacedSpan.innerText = alreadyRaced;
+        totalTipsSpan.innerText = totalTips;
 
     }
 
