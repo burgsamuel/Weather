@@ -358,7 +358,7 @@ function createMainDivs(data) {
                 if (ranDivState === false) {
                     InnerDivElement.style.display = 'none';
                     alreadyRaced += 1;
-                    document.getElementById('already-ran-button').innerText = `🐎 Show  Already  Raced`;
+                    document.getElementById('already-ran-button').innerText = `🐎 Show  Already  Raced - ${alreadyRaced}`;
                     
                 } else {
                     InnerDivElement.style.display = 'flex';  
@@ -368,6 +368,7 @@ function createMainDivs(data) {
                         raceDiv.style.display = 'flex';
                     }
                     document.getElementById('already-ran-button').innerText = `🐎 Hide  Already  Raced`;
+                    alreadyRacedSpan.innerText = alreadyRaced;
                 }
 
             case data[i].score > 50:

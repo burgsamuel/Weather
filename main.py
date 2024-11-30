@@ -24,7 +24,7 @@ horse_odds_list = []
 app = FastAPI()
 
 
-app.mount("/horsetoday", StaticFiles(directory = "horseV1.1", html = True), name = "horseV1.1")
+app.mount("/horsetodayv2", StaticFiles(directory = "horseV1.1", html = True), name = "horseV1.1")
 
 
 
@@ -41,3 +41,7 @@ def horsedata():
     return data
 
 
+@app.get("/horsetoday")
+def horse():   
+    return {"Page is now" : "Shut Down",
+            "MMMMMMM" : "KFC"}
