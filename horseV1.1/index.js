@@ -134,7 +134,7 @@ function createMainDivs(data) {
 
     let alreadyRaced = 0;
     let totalTips = data.length;
-
+    let totalScratched = 0;
 
     // Loop over data that has been split, and extract each piece to add to div
     for (let i = 0; i< data.length; i++) {
@@ -280,8 +280,8 @@ function createMainDivs(data) {
         }
         try {
             if (data[i].raceDetails.Scratched) {
-                horseOdds.innerText = `${data[i].raceDetails.Scratched}`;
-                data[i].raceDetails.weight = '';
+                totalScratched += 1;
+                InnerDivElement.remove();
             }
         } catch (error) {
             horseOdds.innerText = `$ - `;
@@ -423,52 +423,12 @@ function createMainDivs(data) {
 
         }
         alreadyRacedSpan.innerText = alreadyRaced;
-        totalTipsSpan.innerText = totalTips;
+        totalTipsSpan.innerText = totalTips - totalScratched;
 
     }
 
 
 }
-
-
-
-
-//////////////////////////////////////////////////////////////////////////
-//////                  Top Menu Instrucitons Page                  //////
-////////////////////////////////////////////////////////////////////////// 
-
-
-let menuExpandstate = false;
-const instructions = document.createElement('p');
-instructions.className = 'instructions-p';
-instructions.innerText = ' Welcome to our daily tips';
-instructions.style.display = 'none';
-
-
-function menuExpand () {
-    if (!menuExpandstate) {
-        menuDiv.style.height = '700px';
-        headingTitle.style.display = 'none';
-        instructions.style.display = 'flex';
-        menuDiv.appendChild(instructions);
-        menuExpandstate = true;
-    }
-    else {
-        menuDiv.style.height = '45px';
-        headingTitle.style.display = 'flex';
-        instructions.style.display = 'none';
-        menuExpandstate = false;
-    }
-
-}
-
-const intructions = document.createElement('div');
-intructions.className = 'instructions-p';
-instructions.innerHTML = '<h3>Welcome to our daily tips</h3> <p>Start sorting by <strong>race, score, or track. </strong></p><p>You will notice there is a score in the bottom right hand side on each tile.</p>';
-instructions.innerHTML += '<p>For the best chance look for the lowest <br>🏇 SCORE 🏇<br> The tiles are also colour coded depending on score.<br> <i>lighter colours as the score gets lower.</i></p>';
-instructions.innerHTML += '<h3>👍 The lower the score the better 👌</h3>';
-instructions.innerHTML += '<p>As races are completed they will drop off the list. To see races already completed today click the "Show Already Raced" button.</p>';
-instructions.innerHTML += '<p>Do not forget to click on a tile to see that races current track conditions and weather.</p>';
 
 
 
