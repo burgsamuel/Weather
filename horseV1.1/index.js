@@ -269,7 +269,8 @@ function createMainDivs(data) {
         horseOdds.className = 'horse-odds-class';
         if (data[i].raceDetails){
             if (data[i].raceDetails.ABN) {
-                horseOdds.innerText = `ABN`;
+                totalScratched += 1;
+                InnerDivElement.remove();
             } else {
                 horseOdds.innerText = `W: $${data[i].raceDetails.winPrice} `;
                 horseOdds.innerText += `P: $${data[i].raceDetails.placePrice}`;
