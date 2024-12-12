@@ -41,7 +41,8 @@ def horsedata():
     return data
 
 
-@app.get("/horsetoday")
+@app.get("/horsetodayv2")
 def horse():   
     return {"Page is now" : "Shut Down",
-            "MMMMMMM" : "KFC"}
+            "MMMMMMM" : "KFC",
+           "New Address" : "Activated"}
