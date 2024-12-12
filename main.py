@@ -24,7 +24,7 @@ horse_odds_list = []
 app = FastAPI()
 
 
-app.mount("/horsetodayv2", StaticFiles(directory = "horseV1.1", html = True), name = "horseV1.1")
+app.mount("/horsetodayv244", StaticFiles(directory = "horseV1.1", html = True), name = "horseV1.1")
 
 
 
